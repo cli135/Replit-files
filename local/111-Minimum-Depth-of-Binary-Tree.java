@@ -19,16 +19,6 @@ Example 2:
 Input: root = [2,null,3,null,4,null,5,null,6]
 Output: 5
 
- 
-
-Constraints:
-
-    The number of nodes in the tree is in the range [0, 105].
-    -1000 <= Node.val <= 1000
-
-
-
-
 
 /**
  * Definition for a binary tree node.
@@ -53,12 +43,20 @@ class Solution {
         if (root == null && first) {
             return 0; // first
         }
+        // a null elsewhere means a dead end
         else if (root == null) {
+            // no getting out of this haha
+            // will not be the min
             return Integer.MAX_VALUE;
         }
+        // a leaf
         if(root.left == null && root.right == null) {
+            // one left
             return 1;
         }
+        // pick the min path on either side
+        // and go there
         return 1 + Math.min(minDepth(root.left, false), minDepth(root.right, false));
     }
-}
+} 
+
