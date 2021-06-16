@@ -3,3 +3,7 @@ this is nano
 text editor doing the typing
 this is vim doing the typing now
 this is really nice, in the terminal!
+
+
+vim is pretty cool
+thanks .vimrc!!
