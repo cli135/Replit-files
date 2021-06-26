@@ -43,9 +43,9 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
 */
 
 /*
-1. pushLeft (memory usage 70 %ile)
-2. pureIterative (memory usage 40 %ile)
-3. recursive (memory usage 30 %ile)
+pushLeft
+pureIterative
+recursive
 */
 
 /**
@@ -64,46 +64,52 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
  * }
  */
 class Solution {
+    
     public List<Integer> inorderTraversal(TreeNode root) {
-        //List<Integer> list = new ArrayList<Integer>();
-        //pushLeft(root, list); // iterative, using stack
-        //inorder(root, list); // recursive
-        //return list;
-        
-        // pure iterative
-        return pureIterative(root);
+        List<Integer> list = new ArrayList<Integer>();
+        pushLeft(root, list); // iterative, using stacks in recursion
+        //recursive(root, list); // recursion
+        //list = pureIterative(root); // pure iterative, using 1 stack
+        return list;
         
     }
+    
     // pure iterative
     private List<Integer> pureIterative(TreeNode root) {
         List<Integer> list = new ArrayList<Integer>(); // returned list
         Stack<TreeNode> stk = new Stack<TreeNode>(); // call stack
         TreeNode cur = root; // runner
-        boolean down = true;
+        boolean down = true; // should go down or up?
+        
+        // while (going down) or (going up)
         while ( (down && cur != null) || !stk.isEmpty()) {
             // run down left
+            // if we should and can
             if (down && cur != null) {
                 stk.push(cur);
                 cur = cur.left;
             }
-            // at bottom left, add to list
+            // going back up now
             else {
+                // pop, add to list
                 cur = stk.pop();
                 list.add(cur.val);
-                // go right if needed
+                // explore right
                 if (cur.right != null) {
                     cur = cur.right;
-                    down = true; // might go down left
+                    // should go down left again
+                    down = true;
                 }
+                // otheriwse, should go back up
                 else {
-                    down = false; // going back up
+                    down = false;
                 }
             }
         }
+        // no more down && call stack empty
         return list;   
     }
     
-    /*
     // from solutions
     // iterative-recursive helper functions
     private void pushLeft(TreeNode ptr, List<Integer> list) {
@@ -129,18 +135,16 @@ class Solution {
             pushLeft(center.right, list);
         }
     }
-    */
     
     // recursive
-    /*
-    private void inorder(TreeNode root, List<Integer> list) {
+    private void recursive(TreeNode root, List<Integer> list) {
         if (root == null) {
             return;
         }
         // left, center, right
-        inorder(root.left, list);
+        recursive(root.left, list);
         list.add(root.val);
-        inorder(root.right, list);
+        recursive(root.right, list);
     }
-    */
+    
 }
