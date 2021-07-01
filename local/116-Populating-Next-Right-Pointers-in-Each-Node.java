@@ -64,7 +64,92 @@ class Node {
 };
 */
 
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node next;
+
+    public Node() {}
+    
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, Node _left, Node _right, Node _next) {
+        val = _val;
+        left = _left;
+        right = _right;
+        next = _next;
+    }
+};
+*/
+
 class Solution {
+    
+    // goal: O(1) memory
+    // runtime greater than O(n)
+    // runtime should be O(2n) ==> O(n)
+    // because each level halves the total amount
+    // faster than repeated checks
+    Node prev = null;
+    public Node connect(Node root) {
+        int depth = depth(root);
+        // goal is each level
+        for (int l = depth; l >= 1; l--) {
+            int goalLevel = l;
+            // going to that level and connecting links
+            connect1(root, 1, goalLevel);
+            prev = null; // refresh for each round
+        }
+        return root;
+    }
+    // you would need to pass Node** prev
+    // because you want to modify *prev, the pointer to Node
+    // and currently we are just making copies of pointers
+    // and not changing what the pointer in the stack call before
+    // was actually pointing to
+    private void connect1(Node root, int level, int goalLevel) {
+        if (root == null) {
+            return;
+        }
+        // since we're doing l = depth; l >= 1; l--
+        // we should do reverse preorder: right, left, center
+        // to explore the leaves first
+        // ***********
+        // if we did
+        // l = 1; l <= depth; l++
+        // we should do center, right, left:
+        // to explore the root first
+        
+        // right
+        connect1(root.right, level + 1, goalLevel);
+        // left
+        connect1(root.left, level + 1, goalLevel);
+        // center
+        if (level == goalLevel) {
+            root.next = prev; // linking to previous
+            // ohhh this has to be a global variable
+            // because prev is a local parameter copy
+            // and we are not actually changing the pointer
+            // in the stack frame before this
+            // we would need a pointer to a pointer in c++
+            // workaround: use a global variable
+            // where anybody can change what it's pointing to
+            prev = root; // preparing for next link
+        }
+    }
+    private int depth(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        return 1 + Math.max(depth(root.left), depth(root.right));
+    }
+    /*
+    // O(n) runtime? (visits each node once)
+    // O(lg n) memory because one prev tracker per level (lg n levels exist)
     Node[] prev; // global tracker of previous entries
     public Node connect(Node root) {
         int depth = depth(root);
@@ -96,4 +181,5 @@ class Solution {
         }
         return 1 + Math.max(depth(root.left), depth(root.right));
     }
+    */
 }
