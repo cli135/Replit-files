@@ -68,13 +68,13 @@ class Solution {
         // 2. stack both right and left on stack
         return preorderTraversalStackAll(root);
     }
-    public List<Integer> preorderTraversalRights(TreeNode root) {
+    public List<Integer> preorderTraversalRights(TreeNode root) {    
         TreeNode cur = root;
         // rights stack inspired by pavel-shlyk
         // https://leetcode.com/problems/binary-tree-preorder-traversal/discuss/45266/Accepted-iterative-solution-in-Java-using-stack.
         Stack<TreeNode> rights = new Stack<TreeNode>();
         List<Integer> list = new LinkedList<Integer>();
-
+        
         // while (going down) or (going up)
         while ( (cur != null) || (!rights.isEmpty()) )  {
             if (cur != null) {
@@ -92,8 +92,10 @@ class Solution {
         }
         return list;
     }
-
+    
     // stack both left and right
+    // inspired by vegito2002
+    // https://leetcode.com/problems/binary-tree-preorder-traversal/discuss/45267/3-iterative-solutions-stack-and-morris-traversal-complexity-explained
     public List<Integer> preorderTraversalStackAll(TreeNode root) {
         // stack stores both left and right
         Stack<TreeNode> stk = new Stack<TreeNode>();
@@ -101,14 +103,15 @@ class Solution {
         // LinkedList does not, is always constant front and back insertion. ofc, middle insertion is O(N/2) which is harder, but front and back insertion (which is what we're doing here) is good
         // the preorder list
         List<Integer> list = new LinkedList<Integer>();
-
+        
         if (root == null) {
             return list;
         }
-
+        
         // getting us started
         stk.push(root);
-
+        
+        
         // keep popping until nothing left
         while (!stk.isEmpty()) {
             // pop and add val to list
@@ -129,7 +132,7 @@ class Solution {
                 // add to list
                 stk.push(cur.left);
             }
-
+            
         }
         return list;
     }
