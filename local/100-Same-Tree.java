@@ -1,3 +1,5 @@
+/**
+
 100. Same Tree
 Easy
 
@@ -33,7 +35,7 @@ Accepted
 741,890
 Submissions
 1,362,185
-
+*/
 
 /**
  * Definition for a binary tree node.
@@ -79,5 +81,25 @@ class Solution {
         if (p.val != q.val) return false;
         // check corresponding children
         return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+ 
+    // below code is from 7-22-2022 at 2:11am
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {
+            // same - null
+            return true;
+        }
+        else if (p == null || q == null) { // xor due to above first check
+            // discrepancy - xor
+            return false;
+            
+        }
+        else {
+            // check cur vals
+            // and recursively check children are equal to
+            // (at every level, go deeper and confirm children
+            // of the children are equal too - nested, kind of like inception the movie)
+            return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+        }
     }
 }
