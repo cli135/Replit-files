@@ -1,16 +1,44 @@
-# This is a sample Python script.
+import mpmath
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+def main():
+    for i in range(50):
+        # print(i, result(i))
+        # print(int(result(i)),end=", ")
+        pass
+    print(int(result(30)),end=", ")
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def result(n):
+    return f(n, n, 1, True)
 
+def f(n, r, t, first):
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    if n == 0:
+        return 1
+    elif n < r:
+        # reset count because new size
+        return f(n, n, 1, True)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    sum = 0
+    # on your first pick
+    for num_picked in range(1, r + 1):
+        num_remaining = n - num_picked
+        if num_picked == r and not first:
+            # same in continuing train
+            sum += f(num_remaining, num_picked, t + 1, False) * mpmath.binomial(n, num_picked) / (t + 1)
+        else:
+            # first
+            sum += f(num_remaining, num_picked, 1, False) * mpmath.binomial(n, num_picked)
+
+    return sum
+
+# def nCr(n, k):
+#     return factorial(n) / (factorial(n - k) * factorial(k))
+
+# def factorial(n):
+#     if n <= 1:
+#         return 1
+#     else:
+#         return n * factorial(n - 1)
+
+main()
