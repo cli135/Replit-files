@@ -7,6 +7,7 @@ from PIL import Image
 # Open the image form working directory
 # filename = 'img].jpeg'
 def main():
+    # filename = 'img].jpeg'
     filename = 'ocaml logo.png'
 
     image = Image.open(filename)
@@ -26,14 +27,17 @@ def main():
     # let's try 160 width in terminal
     # width = 80
     terminal_width = 160
-    aspect_ratio = 16 / 9
+    # aspect_ratio = 16 / 9
+    aspect_ratio = 1 / (image.size[1] / image.size[0])
     terminal_height = int(terminal_width / aspect_ratio)
     # img = np.zeros((terminal_height, terminal_width))
     img = numpydata
     # plt.imshow(random_image, cmap='gray')
     # plt.colorbar();
 
-    pixel_ascii_map = "`^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
+    # pixel_ascii_map = "`^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
+    pixel_ascii_map = " `.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@"
+    width_multipler: int = 2
 
     max_in_array = np.amax(img)
     max_val = max_in_array
@@ -49,6 +53,7 @@ def main():
         # nearest_i = int(round(sampled_i))
         nearest_j = int(sampled_j)
         nearest_i = int(sampled_i)
+        # rgb
         val = img[nearest_j, nearest_i]
         # print(val)
         # print(type(val))
@@ -57,7 +62,8 @@ def main():
         avg_val: float = np.average(val)
         ascii_val_idx = int(avg_val / max_val * (len(pixel_ascii_map) - 1))
         ascii_val = pixel_ascii_map[ascii_val_idx]
-        print(ascii_val * 2, end="")
+
+        print(ascii_val * width_multipler, end="")
       print('\n', end="")
 
 
